@@ -21,6 +21,9 @@ param defaultDataLakeStorageAccountName string
 @description('Required. The default ADLS Gen2 file system.')
 param defaultDataLakeStorageFilesystem string
 
+@description('Optional. The resource id of the default ADLS Gen2 file system.')
+param defaultDataLakeStorageResourceId string = ''
+
 @description('Optional. Create managed private endpoint to the default storage account or not. If Yes is selected, a managed private endpoint connection request is sent to the workspace\'s primary Data Lake Storage Gen2 account for Spark pools to access data. This must be approved by an owner of the storage account.')
 param defaultDataLakeStorageCreateManagedPrivateEndpoint bool = false
 
@@ -191,6 +194,7 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
     defaultDataLakeStorage: {
       accountUrl: 'https://${defaultDataLakeStorageAccountName}.dfs.${environment().suffixes.storage}'
       filesystem: defaultDataLakeStorageFilesystem
+      resourceId: defaultDataLakeStorageResourceId
       createManagedPrivateEndpoint: managedVirtualNetwork ? defaultDataLakeStorageCreateManagedPrivateEndpoint : null
     }
     encryption: encryption ? {
