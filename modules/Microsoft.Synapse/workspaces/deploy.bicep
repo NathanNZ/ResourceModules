@@ -315,3 +315,6 @@ output connectivityEndpoints object = workspace.properties.connectivityEndpoints
 
 @description('The location the resource was deployed into.')
 output location string = workspace.location
+
+@description('The managed identity of the synapse workspace.')
+output identityPrincipalId string = contains(workspace.identity, 'principalId') ? workspace.identity.principalId : ''
